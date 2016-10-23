@@ -1,4 +1,5 @@
 
+
 body {
   background-color: #f2f2f2;
     font-family: "Lato";
@@ -73,14 +74,14 @@ a:after {
 
 #headerwrap {
 	background-color: #34495e;
-	padding-top: 60px;
+	padding-top: 20px;
 }
 
 #headerwrap h1 {
 	margin-top: 30px;
 	color: white;
 	font-size: 70px;
-	
+
 }
 
 #headerwrap h3 {
@@ -158,3 +159,39 @@ a:after {
 	color: white
 }
 
+#calendar {
+  width: 100%;
+
+}
+
+
+/* ------- Agenda View ------- */
+#agendaView > table{
+    width: 100%;
+    min-height: 500px;
+    background: #FFF;
+
+}
+
+#agendaView .fc-agendaView-event-start,
+#agendaView .fc-agendaView-event-end{
+    width: 20%;
+}
+
+#agendaView .fc-agendaView-event-title{
+    width: 60%;
+}
+#agendaView th{
+    height: 30px;
+    font-size: 14px;
+    vertical-align: text-bottom;
+    font-weight: bold;
+    padding: 10px 0 0 10px;
+}
+
+#agendaView td{
+    height: 30px;
+    padding: 10px 0 0 10px;
+    font-size: 14px;
+    vertical-align: text-bottom;
+}

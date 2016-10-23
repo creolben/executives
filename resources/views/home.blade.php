@@ -1,6 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/main.css" rel="stylesheet">
+    <script src='fullcalendar/node_modules/jquery/dist/jquery.min.js'></script>
+    <script src='fullcalendar/node_modules/moment/moment.js'></script>
+    <script src='fullcalendar/dist/fullcalendar.min.js'></script>
+    <link rel="stylesheet" href="fullcalendar/dist/fullcalendar.min.css"/>
+    <script>
+        $(document).ready(function() {
+            $('#calendar').fullCalendar({
+                defaultDate: '2016-10-12',
+                editable: true,
+                eventLimit: true, // allow "more" link when too many events
+            });
+
+        });
+
+    </script>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Executives">
@@ -9,16 +31,10 @@
 
     <title>Executives</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="css/main.css" rel="stylesheet">
-
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
 
-    <script src="js/jquery.min.js"></script>
+    <script src="js/main.js"></script>
     <script src="js/smoothscroll.js"></script>
 
 
@@ -47,32 +63,16 @@
 	        </div><!--/.nav-collapse -->
 	      </div>
 	    </div>
-
+            <!--/End nav- -->
 
 	<section id="home" name="home"></section>
 	<div id="headerwrap">
 	    <div class="container">
 	    	<div class="row centered">
-	    		<div class="col-lg-12">
-					<h1>Welcome To <b>Pratt</b></h1>
-					<h3>Show your product with this handsome theme.</h3>
-					<br>
-	    		</div>
 
-	    		<div class="col-lg-2">
-	    			<h5>Amazing Results</h5>
-	    			<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-	    			<img class="hidden-xs hidden-sm hidden-md" src="img/arrow1.png">
-	    		</div>
-	    		<div class="col-lg-8">
-	    			<img class="img-responsive" src="img/app-bg.png" alt="">
-	    		</div>
-	    		<div class="col-lg-2">
-	    			<br>
-	    			<img class="hidden-xs hidden-sm hidden-md" src="img/arrow2.png">
-	    			<h5>Awesome Design</h5>
-	    			<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-	    		</div>
+					<h1>Welcome To <b>Pratt</b></h1>
+            <div style="color:white;" id="calendar"></div>
+					<br>
 	    	</div>
 	    </div> <!--/ .container -->
 	</div><!--/ #headerwrap -->
@@ -84,12 +84,13 @@
 		<div class="container">
 			<div class="row centered">
 				<h1>Designed To Excel</h1>
+          <div class="col-md-12" style="color:white;" id="calendar"></div>
 				<br>
 				<br>
 				<div class="col-lg-4">
 					<img src="img/intro01.png" alt="">
 					<h3>Community</h3>
-					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
 				</div>
 				<div class="col-lg-4">
 					<img src="img/intro02.png" alt="">
@@ -188,27 +189,12 @@
 	<section id="showcase" name="showcase"></section>
 	<div id="showcase">
 		<div class="container">
+        <div class="col-md-12" style="color:white;" id="calendar"></div>
 			<div class="row">
 				<h1 class="centered">Some Screenshots</h1>
 				<br>
 				<div class="col-lg-8 col-lg-offset-2">
-					<div id="carousel-example-generic" class="carousel slide">
-					  <!-- Indicators -->
-					  <ol class="carousel-indicators">
-					    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-					    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-					  </ol>
 
-					  <!-- Wrapper for slides -->
-					  <div class="carousel-inner">
-					    <div class="item active">
-					      <img src="img/item-01.png" alt="">
-					    </div>
-					    <div class="item">
-					      <img src="img/item-02.png" alt="">
-					    </div>
-					  </div>
-					</div>
 				</div>
 			</div>
 			<br>
@@ -270,5 +256,13 @@
 	  interval: 3500
 	})
 	</script>
+  <script>
+    $('#calendar').fullCalendar({
+      dayClick: function() {
+        
+        alert('a day has been clicked!');
+    }
+});
+</script>
   </body>
 </html>
