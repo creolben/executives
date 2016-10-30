@@ -7,19 +7,65 @@
 
     <!-- Custom styles for this template -->
     <link href="css/main.css" rel="stylesheet">
+    <link rel="stylesheet" href="fullcalendar/dist/fullcalendar.css"/>
+    <link rel="stylesheet" href="fullcalendar/dist/fullcalendar.print.css" media='print'/>
     <script src='fullcalendar/node_modules/jquery/dist/jquery.min.js'></script>
     <script src='fullcalendar/node_modules/moment/moment.js'></script>
-    <script src='fullcalendar/dist/fullcalendar.min.js'></script>
-    <link rel="stylesheet" href="fullcalendar/dist/fullcalendar.min.css"/>
-    <script>
-        $(document).ready(function() {
-            $('#calendar').fullCalendar({
-                defaultDate: '2016-10-12',
-                editable: true,
-                eventLimit: true, // allow "more" link when too many events
-            });
+    <script src='fullcalendar/dist/fullcalendar.js'></script>
 
-        });
+
+
+
+    <script>
+
+/*
+  jQuery document ready
+*/
+$(document).ready(function(){
+
+$('#calendar').fullCalendar({
+  header: {
+    left: 'prevYear,prev,next,nextYear',
+    center: 'title',
+    right: ''
+},
+  height: 580,
+  aspectRatio: 2,
+  editable: true,
+  draggable: false,
+  events: [
+        {
+            title: 'Event1',
+            start: '2016-10-25'
+        },
+        {
+            title: 'Event2',
+            start: '016-10-26'
+        }
+        // etc...
+    ],
+    color: 'yellow',   // an option!
+    textColor: 'black',// an option!
+   eventRender: function(event, element) {
+       element.qtip({
+           content: event.description
+       });
+   },
+
+  dayClick: function(date) {
+
+    var view = $('#calendar').fullCalendar('getDate');
+    alert('a day has been clicked! ' + date.format());
+    $(this).css('background-color', 'red');
+
+  },
+
+  });
+
+});
+
+
+
 
     </script>
 
@@ -67,13 +113,32 @@
 
 	<section id="home" name="home"></section>
 	<div id="headerwrap">
-	    <div class="container">
-	    	<div class="row centered">
+    <div class="row">
+        <div class="calendar-side col-md-8" style="color:#fbeed5;" id="calendar"></div>
+        <div class="container col-md-3 centered" style="height:600px; background-color:gray; margin-top:53px;">
+          <div class="container"><br>
+            <form action="/" method="get">
+              <input type="text" name="ingredient">
+              <input type="submit">
+            </form>
+        </div><br>
+        <div class=" container receipe-panel">
+          @if (count($errors) === 0)
+            	@for ($i = 0; $i < count($listOfRecipesTitle); $i++)
 
-					<h1>Welcome To <b>Pratt</b></h1>
-            <div style="color:white;" id="calendar"></div>
-					<br>
-	    	</div>
+                <div class="row col-md-12">
+                <div class="pin">
+                  <img src="{{$listOfRecipesImage[$i]}}"><br>
+                  <div class="row">
+                  <p>{{$listOfRecipesTitle[$i]}} </p><br>
+                </div>
+                </div>
+              </div>
+
+              @endfor
+              @endif
+              </div>
+          </div>
 	    </div> <!--/ .container -->
 	</div><!--/ #headerwrap -->
 
@@ -84,7 +149,6 @@
 		<div class="container">
 			<div class="row centered">
 				<h1>Designed To Excel</h1>
-          <div class="col-md-12" style="color:white;" id="calendar"></div>
 				<br>
 				<br>
 				<div class="col-lg-4">
@@ -256,13 +320,6 @@
 	  interval: 3500
 	})
 	</script>
-  <script>
-    $('#calendar').fullCalendar({
-      dayClick: function() {
-        
-        alert('a day has been clicked!');
-    }
-});
-</script>
+
   </body>
 </html>

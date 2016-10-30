@@ -16,7 +16,8 @@ body {
 h1, h2, h3, h4, h5, h6 {
     font-family: "Raleway";
     font-weight: 300;
-    color: #333;
+
+    color: #fbeed5;
 }
 
 
@@ -89,10 +90,10 @@ a:after {
 	font-size: 30px;
 }
 
-#headerwrap h5 {
+#headerwrap h4 {
 	color: white;
 	font-weight: 700;
-	text-align: left;
+	text-align: center;
 }
 
 #headerwrap p {
@@ -160,11 +161,13 @@ a:after {
 }
 
 #calendar {
-  width: 100%;
+  width: 70%;
 
 }
 
-
+.calendar-side{
+  margin-left: 25px;
+}
 /* ------- Agenda View ------- */
 #agendaView > table{
     width: 100%;
@@ -194,4 +197,70 @@ a:after {
     padding: 10px 0 0 10px;
     font-size: 14px;
     vertical-align: text-bottom;
+}
+.fc-header-title {
+    color:#CCCCCC !important;
+}
+.pin {
+	display: inline-block;
+	background: #FEFEFE;
+	border: 2px solid #FAFAFA;
+	box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
+	margin: 0 2px 15px;
+	-webkit-column-break-inside: avoid;
+	-moz-column-break-inside: avoid;
+	column-break-inside: avoid;
+	padding: 15px;
+	padding-bottom:0;
+	background: -webkit-linear-gradient(45deg, #FFF, #F9F9F9);
+	opacity: 1;
+
+	-webkit-transition: all .2s ease;
+	-moz-transition: all .2s ease;
+	-o-transition: all .2s ease;
+	transition: all .2s ease;
+}
+
+.pin img {
+	width: 70%;
+	border-bottom: 1px solid #ccc;
+	padding-bottom: 15px;
+	margin-bottom: 5px;
+}
+
+.pin p {
+	font: 12px/18px Arial, sans-serif;
+	color: #333;
+  background-color:#333;
+	margin: auto;
+  text-align: center;
+  width: auto;
+  height: 30px;
+}
+
+@media (min-width: 960px) {
+	#columns {
+		-webkit-column-count: 4;
+		-moz-column-count: 4;
+		column-count: 4;
+	}
+}
+
+@media (min-width: 1100px) {
+	#columns {
+		-webkit-column-count: 5;
+		-moz-column-count: 5;
+		column-count: 5;
+	}
+}
+
+#columns:hover .pin:not(:hover) {
+	opacity: 0.4;
+}
+.receipe-panel{
+  height:500px;
+  margin-top: auto;
+  overflow-y:scroll;
+  width:100%;
+text-align: center;
 }
