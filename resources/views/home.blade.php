@@ -10,64 +10,103 @@
     <link rel="stylesheet" href="fullcalendar/dist/fullcalendar.css"/>
     <link rel="stylesheet" href="fullcalendar/dist/fullcalendar.print.css" media='print'/>
     <script src='fullcalendar/node_modules/jquery/dist/jquery.min.js'></script>
+    <script src='js/jquery-ui-1.12.1.custom/jquery-ui.js'></script>
     <script src='fullcalendar/node_modules/moment/moment.js'></script>
     <script src='fullcalendar/dist/fullcalendar.js'></script>
 
 
 
 
-    <script>
+<script>
 
 /*
   jQuery document ready
 */
-$(document).ready(function(){
+$(document).ready(function() {
 
-$('#calendar').fullCalendar({
-  header: {
-    left: 'prevYear,prev,next,nextYear',
-    center: 'title',
-    right: ''
-},
-  height: 580,
-  aspectRatio: 2,
-  editable: true,
-  draggable: false,
-  events: [
-        {
-            title: 'Event1',
-            start: '2016-10-25'
+    $('#calendar').fullCalendar({
+
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaWeek'
         },
-        {
-            title: 'Event2',
-            start: '016-10-26'
-        }
-        // etc...
-    ],
-    color: 'yellow',   // an option!
-    textColor: 'black',// an option!
-   eventRender: function(event, element) {
-       element.qtip({
-           content: event.description
-       });
-   },
+        defaultDate: '2016-11-12',
+        editable: true,
+        droppable: true, // this allows things to be dropped onto the calendar !!!
+        events: [
+            {
+                title: 'lunch',
+                start: '2016-11-24',
+                end: '2016-11-27',
+                rendering: 'background',
+                color: 'red'
+            },
+            {
+                title: 'Conference',
+                start: '2016-11-18',
+                end: '2016-11-18'
+            },
+            {
+                title: 'Party',
+                start: '2016-11-29T20:00:00'
+            }
 
-  dayClick: function(date) {
 
-    var view = $('#calendar').fullCalendar('getDate');
-    alert('a day has been clicked! ' + date.format());
-    $(this).css('background-color', 'red');
+        ],
+        //eventAfterRender: function(event, element){
+          //  dropAccept: ".draggable-box",
+          //    element.data('myId',event.myId);
+            //  $(element).droppable({
+            //      drop: function( date, event, ui ) {
+            //          var dragged = ui.draggable;
+            //          var targetId = $(event.target).data('myId');
+              //        alert("Dropped on " + date.format());
+              //    }
+            //  });
+        //  },
+        eventDrop: function(event, delta, revertFunc) {
 
-  },
+          alert(
+          event.title + " was moved " +
+          dayDelta + " days and " +
+          minuteDelta + " minutes."
+      );
 
-  });
+
+            if (!confirm("Are you sure about this change?")) {
+                revertFunc();
+            }
+
+        },
+      drop: function(date, ui) {
+      dropAccept: ".draggable-box",
+
+        //var originalEventObject = $(this).data('eventObject');
+    //  $(ui).css("background","url(https://www.mozilla.org/media/img/firefox/firefox-256.e2c1fc556816.jpg) no-repeat");
+        //$(".fc-day").css("background","url(https://www.mozilla.org/media/img/firefox/firefox-256.e2c1fc556816.jpg) no-repeat");
+        //$("td").first().data("date", date.format());
+        //$('.fc-day').css('background-color', 'red');
+
+      //$(this).css("background","url(https://www.mozilla.org/media/img/firefox/firefox-256.e2c1fc556816.jpg) no-repeat");
+      $("td[data-date='"+ date.format()+ "']").css("background","url(https://www.mozilla.org/media/img/firefox/firefox-256.e2c1fc556816.jpg) no-repeat");
+      var t =  $(this).attr("src");
+
+        alert("Dropped on " + date.format() + t);
+
+    },
+
+    dayClick: function(date, jsEvent, view) {
+
+       alert('Clicked on: ' + date.format());
+       $(this).css('background-color', 'red');
+     }
+
+    });
 
 });
+</script>
 
-
-
-
-    </script>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -114,25 +153,27 @@ $('#calendar').fullCalendar({
 	<section id="home" name="home"></section>
 	<div id="headerwrap">
     <div class="row">
-        <div class="calendar-side col-md-8" style="color:#fbeed5;" id="calendar"></div>
-        <div class="container col-md-3 centered" style="height:600px; background-color:gray; margin-top:53px;">
+        <div class="col-md-8" style="color:#fbeed5;" id="calendar"></div>
+        <div class="container col-md-3" style="height:600px; background-color:gray; margin-top:53px;">
           <div class="container"><br>
             <form action="/" method="get">
               <input type="text" name="ingredient">
               <input type="submit">
             </form>
         </div><br>
-        <div class=" container receipe-panel">
-          @if (count($errors) === 0)
+      <div class="receipe-panel">
+          @if (count($errors) > 0)
+
+            @else
             	@for ($i = 0; $i < count($listOfRecipesTitle); $i++)
 
-                <div class="row col-md-12">
-                <div class="pin">
+                <div class="row col-md-12 pin draggable-box">
+
                   <img src="{{$listOfRecipesImage[$i]}}"><br>
                   <div class="row">
                   <p>{{$listOfRecipesTitle[$i]}} </p><br>
                 </div>
-                </div>
+
               </div>
 
               @endfor
@@ -151,22 +192,8 @@ $('#calendar').fullCalendar({
 				<h1>Designed To Excel</h1>
 				<br>
 				<br>
-				<div class="col-lg-4">
-					<img src="img/intro01.png" alt="">
-					<h3>Community</h3>
-          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-				</div>
-				<div class="col-lg-4">
-					<img src="img/intro02.png" alt="">
-					<h3>Schedule</h3>
-					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-				</div>
-				<div class="col-lg-4">
-					<img src="img/intro03.png" alt="">
-					<h3>Monitoring</h3>
-					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-				</div>
-			</div>
+
+
 			<br>
 			<hr>
 	    </div> <!--/ .container -->
@@ -309,6 +336,20 @@ $('#calendar').fullCalendar({
 
 		</div>
 	</div>
+<script>
+$( init );
+
+function init(){
+  helper: "clone",
+  $(".draggable-box").draggable({
+  helper: function(){
+    return $(this).clone().appendTo('.receipe-panel').css({'zIndex': 5})
+  },
+  revert:true
+});
+}
+
+</script>
 
 
     <!-- Bootstrap core JavaScript

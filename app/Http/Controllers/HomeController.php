@@ -14,6 +14,7 @@ class HomeController extends Controller
     //
       $search = "http://food2fork.com/api/search?key=f1a5ea67b861428fa53fd5ee48e46386&q=";
       $searchValues = $request->input('ingredient');
+      
       $search .= $searchValues;
       $jsonSearchContent = file_get_contents($search);
       $jfo = json_decode($jsonSearchContent);
