@@ -87,12 +87,13 @@ $(document).ready(function() {
         //$(".fc-day").css("background","url(https://www.mozilla.org/media/img/firefox/firefox-256.e2c1fc556816.jpg) no-repeat");
         //$("td").first().data("date", date.format());
         //$('.fc-day').css('background-color', 'red');
-
+      t =  $(this).children('img').attr('src');
       //$(this).css("background","url(https://www.mozilla.org/media/img/firefox/firefox-256.e2c1fc556816.jpg) no-repeat");
-      $("td[data-date='"+ date.format()+ "']").css("background","url(https://www.mozilla.org/media/img/firefox/firefox-256.e2c1fc556816.jpg) no-repeat");
-      var t =  $(this).attr("src");
+      //t = "https://www.mozilla.org/media/img/firefox/firefox-256.e2c1fc556816.jpg";
+      $("td[data-date='"+ date.format()+ "']")
+      .css("background","url("+ t +") no-repeat")
+      .css("background-size", 'cover');
 
-        alert("Dropped on " + date.format() + t);
 
     },
 
