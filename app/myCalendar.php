@@ -33,7 +33,7 @@ class myCalendar{
 			if (!confirm("Are you sure about this change?")) {
 				revertFunc();
 			}else{
-				$(\'.fc-content\').css("background","url(\' + image + \') no-repeat");
+				
 				$.ajax({
 				type:\'POST\',
 				url:\'events/create\',

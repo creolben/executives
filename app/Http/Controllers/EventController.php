@@ -38,6 +38,7 @@ class EventController extends Controller
   $listOfRecipesId = array();
   $listOfRecipesTitle = array();
   $listOfRecipesImage = array();
+  $listOfsource_url = array();
   $max = sizeof($listOfRecipes);
   
     for($i=0; $i<$max ;$i++)
@@ -46,7 +47,9 @@ class EventController extends Controller
       array_push($listOfRecipesId, $listOfRecipes[$i]->recipe_id);
       array_push($listOfRecipesTitle, $listOfRecipes[$i]->title);
       array_push($listOfRecipesImage, $listOfRecipes[$i]->image_url);
+      array_push($listOfsource_url , $listOfRecipes[$i]->source_url);
     }
+
     return response()->json(['listOfId' => $listOfRecipesId,'listOfTitle' => $listOfRecipesTitle, 'listOfImages' => $listOfRecipesImage]);
      
     
@@ -83,7 +86,7 @@ class EventController extends Controller
     }
   public function destroy($id)
     {
-     $event = \App\EventModel::findOrFail($id)]);
+     $event = \App\EventModel::findOrFail($id);
      $event->destroy();
 
      return redirect('events');

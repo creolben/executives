@@ -140,12 +140,15 @@
               var recipe_ids = response.listOfId;
               var recipe_titles = response.listOfTitle;
               var recipe_images = response.listOfImages;
+             // var recipe_urls = response.listOfRecipe_Url;
               var recipe_panel = $("#recipe_list");
               for ( var i = 0, l = recipe_ids.length; i < l; i++ ) {
                   //list all recipes results
-                  recipe_panel.append("<div class=\'draggable-box\'" + "id =" + recipe_ids[i] + "><img src=" + recipe_images[i] + "><h3>" + recipe_titles[i] + "</h3></div>");
+                  recipe_panel.append("<div class=\'draggable-box\'" + "id =" + recipe_ids[i] + "><a href=#" + "><img src=" + recipe_images[i] + "></a><h3>" + recipe_titles[i] + "</h3></div>");
                  $('#' + recipe_ids[i]).on('click', function() {
-                   alert($(this).text());
+                  // alert($(this).text());
+                  // alert(recipe_urls[i]);
+                   
                  });
                 $('#' + recipe_ids[i]).draggable({
                   
