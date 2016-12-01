@@ -8,7 +8,7 @@ class myCalendar{
 	       $calendar = \Calendar::addEvents($events, [ //set custom color fo this event
 	      'backgroundColor' => '#800','textColor'=> 'black'
 	      ])->setOptions([ //set fullcalendar options
-	       'firstDay' => 1, 'droppable'=> true,'editable'=> true, 'dropAccept'=>'.draggable-box'
+	       'firstDay' => 1, 'droppable'=> true,'editable'=> true, 'dropAccept'=>'.draggable-box','rendering' => 'background',
 	      ])->setCallbacks([ //set fullcalendar callback options (will not be JSON encoded)
 	      //'viewRender' => 'function() {alert("Event Added!");}']
 	      'eventAfterAllRender' => 'function() {
@@ -17,10 +17,30 @@ class myCalendar{
 	       $(\'.fc-content\').css("background-size", \'cont\');
 
 	     }',
-	   //Add event click callback
-	    'eventClick' => "function(event,element,date) {
-	        alert(event.start);
-	      }",
+	   //Add event click to delete callback
+	    'eventClick' => 'function(event) {
+	       
+			if (!confirm(\'Are you sure about this change?\')) {
+				revertFunc();
+			}else{
+				
+				$.ajax({
+				type:\'POST\',
+				url:\'events/delete\',
+				data: {
+				\'id\': event.id
+				},
+				success: function(response){
+			    event.id = response.eventid;
+			   // $(\"div[id^=\'calendar\']\").fullCalendar(\'refetchEventSources\',\'/events/feeds\');
+			    },
+			    error: function(e){ 
+			    	alert(event.id);
+			    }
+				});
+			}
+
+	      }',
 			'drop' => 'function(date) {
 
 			// render the event on the calendar
@@ -30,7 +50,7 @@ class myCalendar{
 			start = date.format();
 			end = date.format();
 			// the last \'true\' argument determines if the event \"sticks\"
-			if (!confirm("Are you sure about this change?")) {
+			if (!confirm(\'Are you sure about this change?\')) {
 				revertFunc();
 			}else{
 				
@@ -42,6 +62,13 @@ class myCalendar{
 				\'start_time\': start,
 				\'end_time\': end,
 				},
+				success: function(response){
+			    event.id = response.eventid;
+
+			    $("div[id^=\'calendar\']").fullCalendar(\'refetchEventSources\',\'/events/feeds\');
+			    },
+			    error: function(e){ 
+			    }
 				});
 			}
 			     
@@ -49,7 +76,7 @@ class myCalendar{
 			//Add event drop callback
 			'eventDrop' => 'function(event){
 
-			// the last `true` argument determines if the event "sticks"
+			// the last true argument determines if the event sticks
 			if (!confirm("Are you sure about this change?")) {
 				revertFunc();
 			}else{

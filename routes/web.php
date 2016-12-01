@@ -13,6 +13,7 @@
 
 Route::get('/',"EventController@index" );
 Route::get('/test',"EventController@test" );
+Route::post('/events/delete','EventController@destroy' );
 Route::get('/events/feeds',"EventController@feed" );
 //Route::get('events',"EventController@main_page" );
 Route::get('/events/{event_id}', 'EventController@update');

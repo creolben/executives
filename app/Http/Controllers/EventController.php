@@ -57,13 +57,14 @@ class EventController extends Controller
   }
   public function create(Request $request)
     {
+     
        $e =  new \App\EventModel;
        $e->title = $request->title;
        $e->full_day = true;
        $e->start_time = $request->start_time;
        $e->end_time = $request->end_time;
        $e->save();
-       
+       return response()->json(['eventid' => $e->id]);
     }
   
   public function edit($id)
@@ -84,12 +85,13 @@ class EventController extends Controller
       }
       
     }
-  public function destroy($id)
+  public function destroy(Request $request)
     {
-     $event = \App\EventModel::findOrFail($id);
-     $event->destroy();
-
-     return redirect('events');
+        if ($request){
+       $event = \App\EventModel::findOrFail($request->id);
+       $event->delete();
+       return response()->json(['event' => $event]);
+      }
     }
   Public function test(){
     $events = \App\EventModel::all();

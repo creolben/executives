@@ -176,8 +176,6 @@
                   });            
               }
          }
-
-
          ,
             error: function( _response ){
                 // Handle error
@@ -185,12 +183,10 @@
              // var recipe_panel = $("#recipe_list");
              
               //recipe_panel.append("<div class=\'draggable-box\'" + "id =1" + "><img src=img\item-02.png" + "><h3>Chicken</h3></div>");
-              }
-            
-            
+              }    
         });
     });
-</script>
+   </script>
 
   <script>
   $('fc-content').each(function() {
