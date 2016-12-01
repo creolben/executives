@@ -1,77 +1,76 @@
 <?php
 
 namespace App\Http\Controllers;
+use App;
+use input;
 use App\Calendar;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use \App\recipeSearch;
 class EventController extends Controller
 {
+  
   public function index()
     {
-      //$m = get_class_methods('');
-      //var_dump($m);
-      $events = \App\EventModel::all(); //EventModel implements MaddHatter\LaravelFullcalendar\Event
-      $calendar = \Calendar::addEvents($events, [ //set custom color fo this event
-      'backgroundColor' => '#800','textColor'=> 'black','editable'=> 'true'
-      ])->setOptions([ //set fullcalendar options
-       'firstDay' => 1
-      ])->setCallbacks([ //set fullcalendar callback options (will not be JSON encoded)
-      //'viewRender' => 'function() {alert("Event Added!");}']
-      'eventAfterAllRender' => 'function() {
-       $(\'.fc-content\').css(\'height\', \'80px\');
-       $(\'.fc-content\').css("background","url(\'http://static.food2fork.com/Buffalo2BChicken2BChowder2B5002B0075c131caa8.jpg\') no-repeat");
-       $(\'.fc-content\').css("background-size", \'cont\');
-     }',
-   //Add event click callback
-    'eventClick' => "function(event,element) {
-        alert(event.id);
-      }",
-      //Add event drop callback
-      'eventDrop' => 'function(event){
-        if (!confirm("Are you sure about this change?")) {
-            revertFunc();
-        }else{
-            $.ajax({
-               type:\'POST\',
-               url:\'events/update\',
-               data: {\'id\': event.id,
-                      \'title\': event.title,
-                      \'start_time\': event.start.format(),
-                      \'end_time\': event.start.format(),
-                    },
-            });
-        }
-      }'
-]);
-  return view('main_page', compact('calendar'));
-    }
-  public function Create()
+          $c = new \App\myCalendar;
+          $calendar =  $c->create();
+        return view('main_page', compact('calendar'));
+      }
+    
+  Public function search(Request $request){
+   $c = new \App\myCalendar;
+   $calendar = $c->create();
+   if ($request->has('recipe'))
     {
-      return view('event/create');
+//
+    $searchValues = $request->input('recipe');
     }
-  public function store(Request $request)
+  else
+  {
+    $searchValues = 'chicken';
+  }
+  $search = "http://food2fork.com/api/search?key=f1a5ea67b861428fa53fd5ee48e46386&q=";
+  $search .= $searchValues;
+  $jsonSearchContent = file_get_contents($search);
+  $jfo = json_decode($jsonSearchContent);
+  $listOfRecipes = $jfo->recipes;
+
+  $listOfRecipesId = array();
+  $listOfRecipesTitle = array();
+  $listOfRecipesImage = array();
+  $max = sizeof($listOfRecipes);
+  
+    for($i=0; $i<$max ;$i++)
     {
-     $time = explode(" - ", $request->input('time'));
-     $event = new Event;
-     $event->name = $request->input('name');
-     $event->title = $request->input('title');
-     $event->start_time = $time[0];
-     $event->end_time = $time[1];
-     $event->save();
-     $request->session()->flash('success', 'The event was successfully saved!');
-     return redirect('events/create');
+      
+      array_push($listOfRecipesId, $listOfRecipes[$i]->recipe_id);
+      array_push($listOfRecipesTitle, $listOfRecipes[$i]->title);
+      array_push($listOfRecipesImage, $listOfRecipes[$i]->image_url);
     }
-  public function show($id)
+    return response()->json(['listOfId' => $listOfRecipesId,'listOfTitle' => $listOfRecipesTitle, 'listOfImages' => $listOfRecipesImage]);
+     
+    
+    //return view('main_page', compact('calendar'));
+  }
+  public function create(Request $request)
     {
-     //return view('events/view', ['events' => Event::findOrFail($id)]);
+       $e =  new \App\EventModel;
+       $e->title = $request->title;
+       $e->full_day = true;
+       $e->start_time = $request->start_time;
+       $e->end_time = $request->end_time;
+       $e->save();
+       
     }
+  
   public function edit($id)
     {
      return view('event/edit', ['event' => Event::findOrFail($id)]);
     }
   public function update(Request $request)
     {
-      $title = $request->title;
+      if ($request->has('start_time')){
+        $title = $request->title;
       $id = $request->id;
       $start_time = $request->start_time;
       $end_time = $request->end_time;
@@ -79,17 +78,24 @@ class EventController extends Controller
       $e->start_time = $start_time;
       $e->end_time = $end_time;
       $e->save();
+      }
+      
     }
   public function destroy($id)
     {
-     $event = Event::find($id);
-     $event->delete();
+     $event = \App\EventModel::findOrFail($id)]);
+     $event->destroy();
 
      return redirect('events');
     }
-    Public function welcome(){
-      $event = Event::all();
-      return $events;
-      //return view('events/welcome');
-    }
+  Public function test(){
+    $events = \App\EventModel::all();
+    //return $events;
+    return view('test',compact('events'));
+  }
+  Public function feed(){
+    $events = \App\EventModel::all();
+    return $events;
+    
+  }
 }

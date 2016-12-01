@@ -11,12 +11,17 @@
 |
 */
 
-Route::get('/',"HomeController@home" );
+Route::get('/',"EventController@index" );
+Route::get('/test',"EventController@test" );
+Route::get('/events/feeds',"EventController@feed" );
 //Route::get('events',"EventController@main_page" );
 Route::get('/events/{event_id}', 'EventController@update');
+Route::get('/events', 'EventController@index');
 Route::post('/events/update', 'EventController@update');
-
-Route::resource('events', 'EventController');
+Route::post('/events/create', 'EventController@create');
+Route::post('events/search', 'EventController@search');
+Route::get('/events/search', 'EventController@index');
+Route::resource('/events', 'EventController');
 Route::get('/debug', function() {
 
     echo '<pre>';

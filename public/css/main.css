@@ -255,17 +255,67 @@ a:after {
 #columns:hover .pin:not(:hover) {
 	opacity: 0.4;
 }
-.receipe-panel{
-  height:500px;
-  margin-top: auto;
-  overflow-y:scroll;
+.recipe-panel{
   width:100%;
-text-align: center;
+  height: 550px;
+ text-align: center;
+ margin-left: auto;
+ margin-right: auto;
+ position:relative;
+overflow-y: scroll;
+ 
 }
-.receipe-panel .draggable-box{
+.draggable-box{
+    height: 20px;
+    width: 80px;
+    border: 1px solid Black;
+    text-align: center;
+    
+}
 
-    height: 120px;
+
+#recipe_list > div {
+  -webkit-box-shadow: 0 4px 15px -5px #555;
+  box-shadow: 0 4px 15px -5px #555;
+  background-color: #fff;
+  width: 200px;
+  height: 180px;
+  margin-top: 10px;
+  margin-left:  auto;
+  margin-right: auto;
+  position: relative;
+ 
+}
+
+#recipe_list > div img {
+  padding: 0px;
+  display: block;
+  width: 100%;
+  height: 100px;
+}
+#recipe_list > div h3 {
+	color: black;
+	font-size: 100%;
+	}
+#left_panel{
+	position: relative;
+	height:600px;
+	margin-left: auto;
+ 	margin-right: auto;
+ 	 background-color:green;
+ 	
+ 	 
+}
+.cell-highlght{
+    background-color:green;
+}
+.cell-dropped{
+    background-color:red;
+}
+.ui-draggable-helper {
+    height: 20px;
     width: 160px;
     border: 1px solid Black;
     text-align: center;
+    background-color:fff;
 }

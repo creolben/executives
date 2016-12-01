@@ -11,18 +11,24 @@
   <link rel="stylesheet" href="fullcalendar/dist/fullcalendar.css"/>
   <link rel="stylesheet" href="fullcalendar/dist/fullcalendar.print.css" media='print'/>
   <script src='fullcalendar/node_modules/jquery/dist/jquery.min.js'></script>
-  
   <script src='js/jquery-ui-1.12.1.custom/jquery-ui.js'></script>
   <script src='fullcalendar/node_modules/moment/moment.js'></script>
-  <script src='fullcalendar/dist/fullcalendar.js'></script>
-<meta name="csrf-token" content="{{ csrf_token() }}" />
-<script type="text/javascript">
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-</script>
+  <script src='fullcalendar/dist/fullcalendar.js'></script> 
+  <script src='js/jquery.pinto.js'></script>
+  <meta name="csrf-token" content="{{ csrf_token() }}" />
+  <script type="text/javascript">
+      $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+      });
+  </script>
+  <script>
+
+    $('#recipe_list').pinto();
+
+  </script>
+
   <style>
     /* Remove the navbar's default margin-bottom and rounded borders */
     .navbar {
@@ -84,7 +90,7 @@
   </div>
 </nav>
 
-<div class="container-fluid text-center">
+<div class="container-fluid text-center" id="main_container">
   <div class="row content">
     <div class="col-sm-9 text-left">
       <br>
@@ -93,19 +99,128 @@
       <hr>
 
     </div>
-    <div class="container-fluid col-sm-3 sidenav">
-          <form action="/" method="get">
-            <input type="text" name="ingredient">
-            <input type="submit">
-          </form>
-
+    <div class="container col-md-3 sidenav text-centered" id="left_panel">
+        <div id="form">
+          {!! Form::open(['url' => 'events/search']) !!}
+            {{ csrf_field() }}
+            <div class="form-group">
+              {!! Form::label('title', 'Recipe Title') !!}
+              {!! Form::text('recipe', null, ['class' => 'form-control']) !!}
+          </div>
+          <div class="form-group">
+              {!! Form::submit('Search', ['class' => 'btn btn-primary form-control']) !!}
+          </div>
+          {!! Form::close() !!}
         </div>
+        <div class="recipe-panel col-md-3">
+          <div id ="recipe_list" class="container span6 offset6">
+            <!-- These are our grid blocks -->
+        </div>
+        </div>
+        </div>
+        
     </div>
   </div>
 </div>
 
 <footer class="container-fluid text-center">
   <p>Footer Text</p>
+   <script>
+    $("form").on('submit', function (e) {
+      
+        e.preventDefault();
+        var recipe = $("input[name='recipe']").val();
+        $.ajax({
+            type: "POST",
+            url:'events/search',
+            data: $('form').serialize(), // Remember that you need to have your csrf token included
+            dataType: 'json',
+            success: function( response ){
+                // Handle your response..
+              var recipe_ids = response.listOfId;
+              var recipe_titles = response.listOfTitle;
+              var recipe_images = response.listOfImages;
+              var recipe_panel = $("#recipe_list");
+              for ( var i = 0, l = recipe_ids.length; i < l; i++ ) {
+                  //list all recipes results
+                  recipe_panel.append("<div class=\'draggable-box\'" + "id =" + recipe_ids[i] + "><img src=" + recipe_images[i] + "><h3>" + recipe_titles[i] + "</h3></div>");
+                 $('#' + recipe_ids[i]).on('click', function() {
+                   alert($(this).text());
+                 });
+                $('#' + recipe_ids[i]).draggable({
+                  
+                  zIndex:999,
+                  helper: 'clone',
+                  init: function(){
+                    var eventObject = {
+                        title: $.trim($(this).text()) // use the element's text as the event title
+                      };
+                      
+                      // store the Event Object in the DOM element so we can get to it later
+                      $(this).data('eventObject', eventObject);
+                  },
+                  start: function() {
+                    
+                      $('.recipe-panel').css("overflow", "visible");
+                        
+                  },
+                  stop: function() {
+                      $('.recipe-panel').css("overflow", "scroll");
+                      //alert(eventObject.text());
+                  },
+                
+                  revert: true
+                  });            
+              }
+         }
+
+
+         ,
+            error: function( _response ){
+                // Handle error
+              alert("No Data error");
+             // var recipe_panel = $("#recipe_list");
+             
+              //recipe_panel.append("<div class=\'draggable-box\'" + "id =1" + "><img src=img\item-02.png" + "><h3>Chicken</h3></div>");
+              }
+            
+            
+        });
+    });
+</script>
+
+  <script>
+  $('fc-content').each(function() {
+      
+        // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+        // it doesn't need to have a start or end
+        var eventObject = {
+          title: $.trim($(this).text()) // use the element's text as the event title
+        };
+        
+        // store the Event Object in the DOM element so we can get to it later
+        $(this).data('eventObject', eventObject);
+        
+        // make the event draggable using jQuery UI
+        $(this).draggable({
+          zIndex: 999,
+          start: function() {
+            
+              $('.recipe-panel').css("overflow", "visible");
+          },
+          stop: function() {
+               $('.recipe-panel').css("overflow", "scroll");
+          },
+                  
+          revert: true,      // will cause the event to go back to its
+          revertDuration: 0  //  original position after the drag
+        });
+
+      
+    
+      });
+    
+  </script>
 </footer>
 
 </body>

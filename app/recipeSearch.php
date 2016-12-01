@@ -1,13 +1,15 @@
 <?php
-
-class recipe_search{
-
+namespace App;
+use Illuminate\Http\Request;
+class recipeSearch{
+  public $listOfRecipesId;
+  public $listOfRecipesTitle;
+  public $listOfRecipesImage;
   Public Function find (Request $request){
-    $events = \App\Event::all();
-    if ($request->has('ingredient'))
+    if ($request->has('recipe'))
       {
   //
-      $searchValues = $request->input('ingredient');
+      $searchValues = $request->input('recipe');
       }
     else
     {
@@ -25,11 +27,12 @@ class recipe_search{
     $max = sizeof($listOfRecipes);
     for($i=0; $i<$max ;$i++)
     {
+      
       array_push($listOfRecipesId, $listOfRecipes[$i]->recipe_id);
       array_push($listOfRecipesTitle, $listOfRecipes[$i]->title);
       array_push($listOfRecipesImage, $listOfRecipes[$i]->image_url);
     }
 
   }
-  return "";
+  
 }
