@@ -1,16 +1,20 @@
 
 
 body {
-  background-color: #f2f2f2;
-    font-family: "Lato";
-    font-weight: 300;
-    font-size: 16px;
-    color: #555;
-    padding-top: 0px;
-
-    -webkit-font-smoothing: antialiased;
-    -webkit-overflow-scrolling: touch;
+    font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 100%; /* 12px */
+  line-height: 123%;
+  vertical-align: baseline;
+  background: #ececea;
+  margin: 0 auto;
+  padding: 0;
 }
+/* Set black background color, white text and some padding */
+    .footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
 
 /* Titles */
 h1, h2, h3, h4, h5, h6 {
@@ -31,11 +35,16 @@ p {
     text-align: center;
 }
 
+ul li {
+  list-style: none outside none;
+}
+
 /* Links */
 a {
-    color: #3bc492;
+    
     word-wrap: break-word;
-
+    color: #000;
+    text-decoration: none;
     -webkit-transition: color 0.1s ease-in, background 0.1s ease-in;
     -moz-transition: color 0.1s ease-in, background 0.1s ease-in;
     -ms-transition: color 0.1s ease-in, background 0.1s ease-in;
@@ -45,18 +54,18 @@ a {
 
 a:hover,
 a:focus {
-    color: #c0392b;
+   
+    background-color: fff;
     text-decoration: none;
     outline: 0;
+
 }
 
 a:before,
 a:after {
-    -webkit-transition: color 0.1s ease-in, background 0.1s ease-in;
-    -moz-transition: color 0.1s ease-in, background 0.1s ease-in;
-    -ms-transition: color 0.1s ease-in, background 0.1s ease-in;
-    -o-transition: color 0.1s ease-in, background 0.1s ease-in;
-    transition: color 0.1s ease-in, background 0.1s ease-in;
+    transition: all 1s ease 0s;
+  -webkit-transition: all 1s ease 0s;
+  width: 33.333333%;
 }
 
  hr {
@@ -263,13 +272,17 @@ a:after {
  margin-right: auto;
  position:relative;
 overflow-y: scroll;
+
  
 }
 .draggable-box{
-    height: 20px;
-    width: 80px;
-    border: 1px solid Black;
+    
+    
     text-align: center;
+    margin-left: 50px;
+    margin-right: 50px;
+    float: left;
+   width: 33.333333%;
     
 }
 
@@ -277,11 +290,10 @@ overflow-y: scroll;
 #recipe_list > div {
   -webkit-box-shadow: 0 4px 15px -5px #555;
   box-shadow: 0 4px 15px -5px #555;
-  background-color: #fff;
   width: 200px;
   height: 180px;
-  margin-top: 10px;
-  margin-left:  auto;
+  margin-top: 25px;
+  
   margin-right: auto;
   position: relative;
  
@@ -298,13 +310,14 @@ overflow-y: scroll;
 	font-size: 100%;
 	}
 #left_panel{
-	position: relative;
-	height:600px;
-	margin-left: auto;
- 	margin-right: auto;
- 	 background-color:green;
- 	
  	 
+   float: left;
+    height: 100%;
+    margin-top: 30px;
+    margin-left: 130px;
+    width: 1000px;
+   
+    text-align: center; 
 }
 .cell-highlght{
     background-color:green;
@@ -325,4 +338,34 @@ overflow-y: scroll;
    white-space: -pre-wrap;     /* Opera <7 */   
    white-space: -o-pre-wrap;   /* Opera 7 */    
    word-wrap: break-word;      /* IE */
+}
+#calendar-frame{
+  float: left;
+  background-color:rgba(0, 0, 0, 0.5);
+  margin-left: -1000px;
+    width:1000px;
+    position: absolute; right: 800; top: 0; z-index: 100;
+}
+#main_container{
+    width: 1000px;
+    position: relative;
+}
+#form{
+  display: block;
+  margin-left:  auto;
+  margin-right: auto;
+}
+
+.span3 img{
+  width: 50%;
+  border: none;
+}
+.span3 {
+  
+}
+.span3 a:hover div.recipe_list {
+  background: url(img/item-01.png) #fff no-repeat; 
+  transition: all 1s ease 0s;
+  -webkit-transition: all 1s ease 0s;
+  width: 33.333333%;
 }

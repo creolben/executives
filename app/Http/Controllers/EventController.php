@@ -50,7 +50,7 @@ class EventController extends Controller
       array_push($listOfsource_url , $listOfRecipes[$i]->source_url);
     }
 
-    return response()->json(['listOfId' => $listOfRecipesId,'listOfTitle' => $listOfRecipesTitle, 'listOfImages' => $listOfRecipesImage]);
+    return response()->json(['listOfId' => $listOfRecipesId,'listOfTitle' => $listOfRecipesTitle, 'listOfImages' => $listOfRecipesImage,'listOfUrls' =>$listOfsource_url]);
      
     
     //return view('main_page', compact('calendar'));
@@ -64,7 +64,8 @@ class EventController extends Controller
        $e->start_time = $request->start_time;
        $e->end_time = $request->end_time;
        $e->save();
-       return response()->json(['eventid' => $e->id]);
+       $events = \App\EventModel::all();
+       return response()->json(['events' => $events]);
     }
   
   public function edit($id)

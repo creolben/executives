@@ -32,6 +32,7 @@ class myCalendar{
 				},
 				success: function(response){
 			    event.id = response.eventid;
+			    $("div[id^=\'calendar\']").fullCalendar( \'refetchEvents\' );
 			   // $(\"div[id^=\'calendar\']\").fullCalendar(\'refetchEventSources\',\'/events/feeds\');
 			    },
 			    error: function(e){ 
@@ -44,13 +45,13 @@ class myCalendar{
 			'drop' => 'function(date) {
 
 			// render the event on the calendar
-
+				alert("droped");
 			image =  $(this).children(\'img\').attr(\'src\');
 			title = $(this).children(\'h3\').text();
 			start = date.format();
 			end = date.format();
 			// the last \'true\' argument determines if the event \"sticks\"
-			if (!confirm(\'Are you sure about this change?\')) {
+			if (!confirm(\'Are you sure you want to add recipe?\')) {
 				revertFunc();
 			}else{
 				
@@ -63,9 +64,12 @@ class myCalendar{
 				\'end_time\': end,
 				},
 				success: function(response){
-			    event.id = response.eventid;
+			    
 
-			    $("div[id^=\'calendar\']").fullCalendar(\'refetchEventSources\',\'/events/feeds\');
+			    $("div[id^=\'calendar\']").fullCalendar(\'removeEvents\');
+			     $("div[id^=\'calendar\']").fullCalendar( \'refetchEvents\' )
+			   //	$("div[id^=\'calendar\']").fullCalendar(\'addEventSource\', response.events);         
+                $("div[id^=\'calendar\']").fullCalendar(\'rerenderEvents\' );
 			    },
 			    error: function(e){ 
 			    }
