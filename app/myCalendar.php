@@ -21,7 +21,7 @@ class myCalendar{
 	    'eventClick' => 'function(event) {
 	       
 			if (!confirm(\'Are you sure about this change?\')) {
-				revertFunc();
+				
 			}else{
 				
 				$.ajax({

@@ -2,7 +2,7 @@
 
 body {
     font-family: Georgia, "Times New Roman", Times, serif;
-  font-size: 100%; /* 12px */
+  font-size: 200%; /* 12px */
   line-height: 123%;
   vertical-align: baseline;
   background: #ececea;
@@ -271,7 +271,7 @@ a:after {
  margin-left: auto;
  margin-right: auto;
  position:relative;
-overflow-y: scroll;
+overflow-y: visible ;
 
  
 }
@@ -288,11 +288,11 @@ overflow-y: scroll;
 
 
 #recipe_list > div {
-  -webkit-box-shadow: 0 4px 15px -5px #555;
-  box-shadow: 0 4px 15px -5px #555;
-  width: 200px;
-  height: 180px;
-  margin-top: 25px;
+  /*-webkit-box-shadow: 0 4px 15px -5px #555;*/
+  /*box-shadow: 0 4px 15px -5px #555;*/
+  width: 180px;
+  height: 200px;
+  margin-top: 35px;
   
   margin-right: auto;
   position: relative;
@@ -341,7 +341,9 @@ overflow-y: scroll;
 }
 #calendar-frame{
   float: left;
-  background-color:rgba(0, 0, 0, 0.5);
+
+  background-color:white; 
+  /*background-color:rgba(0, 0, 0, 0.5);*/
   margin-left: -1000px;
     width:1000px;
     position: absolute; right: 800; top: 0; z-index: 100;

@@ -16,6 +16,12 @@
   <script src='fullcalendar/dist/fullcalendar.js'></script> 
   <script src='js/jquery.pinto.js'></script>
   <meta name="csrf-token" content="{{ csrf_token() }}" />
+  <script>
+  $('document').ready( function(){
+
+    alert('stated');
+  })
+  </script>
   <script type="text/javascript">
       $.ajaxSetup({
           headers: {
@@ -23,15 +29,10 @@
           }
       });
   </script>
-  <script>
-
-    $('#recipe_list').pinto();
-
-  </script>
 
 </head>
 <body>
-<nav class="navbar navbar-inverse">
+<nav class="navbar">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -70,7 +71,7 @@
             {!! Form::open(['url' => 'events/search']) !!}
               {{ csrf_field() }}
               <div class="form-group">
-                {!! Form::label('title', 'Recipe Title') !!}
+               <strong> {!! Form::label('title', 'Recipe Title') !!}</strong>
                 {!! Form::text('recipe', null, ['class' => 'form-control']) !!}
             </div>
             <div class="form-group">
@@ -125,7 +126,7 @@
               for ( var i = 0, l = recipe_ids.length; i < l; i++ ) {
                   //list all recipes results
             
-                  recipe_panel.append("<div class=\'draggable-box span3\'" + "id =" + recipe_ids[i] + "><img src=" + recipe_images[i] + "><h3>" + recipe_titles[i] + "</h3></div>");
+                  recipe_panel.append("<div class=\'draggable-box\'" + "id =" + recipe_ids[i] + "><img src=" + recipe_images[i] + "><h3>" + recipe_titles[i] + "</h3></div>");
                   // recipe_panel.append("<div class=\'draggable-box span3\'" + "id =" + recipe_ids[i] + "><a href=" + recipe_urls[i] + "><img src=" + recipe_images[i] + "><h3>" + recipe_titles[i] + "</h3></a></div>");
                  $('#' + recipe_ids[i]).on('click', function() {
                   //opendialog(""+ recipe_urls[i] + "/");
@@ -133,9 +134,24 @@
                    alert("" + recipe_urls[i] + "");
                    
                  });
+                 $('#' + recipe_ids[i]).on('mouseleave', function() {
+                  //opendialog(""+ recipe_urls[i] + "/");
+
+                   $(this).css("background-color","transparent");  
+                    $(this).children('h3').css("color","black"); 
+                 });
+                 
+                 $('#' + recipe_ids[i]).on('mouseover', function() {
+                  //opendialog(""+ recipe_urls[i] + "/");
+
+                  $(this).css("background-color","white");  
+                  $(this).children('h3').css("color","green");  
+                   
+                 });
+
                 $('#' + recipe_ids[i]).draggable({
                   
-                  zIndex:999,
+                  zIndex:100,
                   helper: 'clone',
                   init: function(){
                     var eventObject = {
@@ -158,8 +174,7 @@
                                     },1000
                                     
                                     );
-                    
-                        
+                                  
                         
                   },
                   stop: function() {
@@ -184,38 +199,38 @@
    </script>
 
   <script>
-  $('fc-content').each(function() {
+  // $('fc-content').each(function() {
       
-        // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
-        // it doesn't need to have a start or end
-        var eventObject = {
-          title: $.trim($(this).text()) // use the element's text as the event title
-        };
+  //       // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+  //       // it doesn't need to have a start or end
+  //       var eventObject = {
+  //         title: $.trim($(this).text()) // use the element's text as the event title
+  //       };
         
-        // store the Event Object in the DOM element so we can get to it later
-        $(this).data('eventObject', eventObject);
+  //       // store the Event Object in the DOM element so we can get to it later
+  //       $(this).data('eventObject', eventObject);
         
-        // make the event draggable using jQuery UI
-        $(this).draggable({
-          zIndex: 999,
-          start: function() {
+  //       // make the event draggable using jQuery UI
+  //       $(this).draggable({
+  //         zIndex: 100,
+  //         start: function() {
             
-              $('.recipe-panel').css("overflow", "visible");
-          },
-          stop: function() {
-           // alert("stop");
-               $('.recipe-panel').css("overflow", "scroll");
+  //             $('.recipe-panel').css("overflow", "visible");
+  //         },
+  //         stop: function() {
+  //          // alert("stop");
+  //              $('.recipe-panel').css("overflow", "scroll");
                
 
-          },
+  //         },
                   
-          revert: true,      // will cause the event to go back to its
-          revertDuration: 0  //  original position after the drag
-        });
+  //         revert: true,      // will cause the event to go back to its
+  //         revertDuration: 0  //  original position after the drag
+  //       });
 
       
     
-      });
+  //     });
     
   </script>
   <script>
@@ -247,30 +262,7 @@
   });
 
   </script>
-  <script>
-  $("#somediv").click(function() {
-  opendialog("http://www.closetcooking.com/2011/11/buffalo-chicken-chowder.html/");
-});
-
-function opendialog(page) {
-  var $dialog = $('#somediv')
-  .html('<iframe style="border: 0px; " src="' + page + '" width="100%" height="100%"></iframe>')
-  .dialog({
-    title: "Page",
-    autoOpen: false,
-    dialogClass: 'dialog_fixed,ui-widget-header',
-    modal: true,
-    height: 500,
-    minWidth: 400,
-    minHeight: 400,
-    draggable:true,
-    /*close: function () { $(this).remove(); },*/
-    buttons: { "Ok": function () { $(this).dialog("close"); } }
-  });
-  $dialog.dialog('open');
-} 
-
-  </script>
+ 
   <script>
   $(".recipe-panel").click(function() {
    
@@ -285,6 +277,7 @@ function opendialog(page) {
               );
         });
   </script>
+ 
 </footer>
 
 </body>
